@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -18,7 +19,8 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtProvider {
 
-    private final String secretKey = "SecretK3y";
+    @Value("${secret-key}")
+    private String secretKey;
     private Key key;
 
     @PostConstruct      // 클래스의 인스턴스 생성 후 호출
