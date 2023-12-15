@@ -21,20 +21,13 @@ public class JwtProvider {
 
     @Value("${secret-key}")
     private String secretKey;
-    private Key key;
-
-    @PostConstruct      // 클래스의 인스턴스 생성 후 호출
-    public void init() {
-        byte[] bytes = Base64.getDecoder().decode(secretKey);
-        key = Keys.hmacShaKeyFor(bytes);
-    }
 
     public String create(String email) {
 
         Date expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
 
         return Jwts.builder()
-                .signWith(key, SignatureAlgorithm.HS256)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(expiredDate)
@@ -46,7 +39,7 @@ public class JwtProvider {
         Claims claims = null;
 
         try {
-            claims = Jwts.parser().setSigningKey(key)
+            claims = Jwts.parser().setSigningKey(secretKey)
                     .parseClaimsJws(jwt).getBody();
         } catch (Exception e) {
             e.printStackTrace();
