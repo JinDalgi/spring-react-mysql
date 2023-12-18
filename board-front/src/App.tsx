@@ -1,13 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import BoardItem from "./components/BoardItem";
 import {commentListMock, favoriteListMock, latestBoardListMock, top3BoardListMock} from './mocks';
 import Top3Item from "./components/Top3Item";
 import CommentItem from "./components/CommentItem";
 import FavoriteItem from "./components/FavoriteItem";
+import InputBox from "./components/InputBox";
 
 function App() {
+
+    const [value, setValue] = useState<string>('');
+
     return (
+
         <>
             {/*{latestBoardListMock.map(boardListItem =>*/}
             {/*    <BoardItem boardListItem={boardListItem}></BoardItem>)}*/}
@@ -22,11 +27,14 @@ function App() {
             {/*    <CommentItem commentListItem={ commentListMock } />)}*/}
             {/*</div>*/}
 
-            <div style={{ display: 'flex', columnGap: '30px', rowGap: '20px' }}>
-                {favoriteListMock.map(favoriteListMock =>
-                    <FavoriteItem favoriteListItem={favoriteListMock} />)}
-            </div>
-            </>
+            {/*<div style={{ display: 'flex', columnGap: '30px', rowGap: '20px' }}>*/}
+            {/*    {favoriteListMock.map(favoriteListMock =>*/}
+            {/*        <FavoriteItem favoriteListItem={favoriteListMock} />)}*/}
+            {/*</div>*/}
+
+            <InputBox label='Email' type='text' placeholder='이메일 주소를 입력해주세요'
+                      value={value} setValue={setValue} error={false}  />
+        </>
     );
 }
 

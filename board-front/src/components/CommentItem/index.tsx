@@ -9,7 +9,7 @@ interface Props {
 // component: Comment List Item 컴포넌트 //
 export default function CommentItem({ commentListItem }: Props) {
 
-    // properties //
+    // state: properties //
     const { nickname, profileImage, writeDatetime, content } = commentListItem;
 
     // render: Comment List Item 랜더링 //
