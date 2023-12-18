@@ -1,5 +1,5 @@
 import React from "react";
-import defaultProfileImage from "../../assets/images/Default_Profile_Image.svg.png";
+import defaultProfileImage from "../../assets/images/default-profile-image.png";
 import {FavoriteListItem} from "../../types/interface";
 import './style.css';
 
