@@ -1,0 +1,24 @@
+.favorite-list-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.favorite-list-item-profile-box {
+    width: 32px;
+    height: 32px;
+}
+
+.favorite-list-item-profile-image {
+    border-radius: 50% 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.favorite-list-item-nickname {
+    color: rgba(0, 0, 0, 0.7);
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 140%;
+}
