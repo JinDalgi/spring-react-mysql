@@ -5,6 +5,6 @@ export default function User() {
 
     // component: 유저 검색 화면 컴포넌트 //
     return (
-        <div></div>
+        <div>유저 화면</div>
     )
 }

@@ -1,3 +1,73 @@
+.black-button {
+    border-radius: 46px;
+    width: 95px;
+    height: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 1);
+
+    color: rgba(255, 255, 255, 1);
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 140%;
+
+    cursor: pointer;
+}
+
+.black-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.white-button {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 46px;
+    width: 93px;
+    height: 28px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(255, 255, 255, 1);
+
+    color: rgba(0, 0, 0, 0.5);
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 140%;
+
+    cursor: pointer;
+}
+
+.white-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.disable-button {
+    border-radius: 46px;
+    width: 95px;
+    height: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.4);
+
+    color: rgba(255, 255, 255, 1);
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 140%;
+
+    cursor: not-allowed;
+}
+
+
 .icon-box {
     width: 24px;
     height: 24px;
@@ -54,4 +124,38 @@
 
 .naver-blog-icon {
     background-image: url(assets/images/naver-blog.png);
+}
+
+.logo-dark-icon {
+    background-image: url(assets/images/logo-dark.png);
+}
+
+.search-light-icon {
+    background-image: url(assets/images/search-light.png);
+}
+
+.header-search-input-box {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 43px;
+    padding: 0 10px 0 12px;
+    width: 255px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.header-search-input {
+    flex: 1;
+
+    border: none;
+    background: none;
+    outline: none;
+
+    color: rgba(0, 0, 0, 1);
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
 }

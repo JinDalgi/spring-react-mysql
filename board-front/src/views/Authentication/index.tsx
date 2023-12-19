@@ -6,6 +6,6 @@ export default function Authentication() {
 
     // render: 인증 화면 컴포넌트 랜더링 //
     return (
-        <div></div>
+        <div>인증화면</div>
     )
 }
