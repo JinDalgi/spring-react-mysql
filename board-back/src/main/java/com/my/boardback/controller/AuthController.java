@@ -1,6 +1,8 @@
 package com.my.boardback.controller;
 
+import com.my.boardback.dto.request.auth.SignInRequestDto;
 import com.my.boardback.dto.request.auth.SignUpRequestDto;
+import com.my.boardback.dto.response.auth.SignInResponseDto;
 import com.my.boardback.dto.response.auth.SignUpResponseDto;
 import com.my.boardback.service.AuthService;
 import jakarta.validation.Valid;
@@ -19,7 +21,12 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<? super SignUpResponseDto> signUp(@RequestBody @Valid SignUpRequestDto requestBody) {
-        return authService.signUp(requestBody);
+    public ResponseEntity<? super SignUpResponseDto> signUp(@RequestBody @Valid SignUpRequestDto dto) {
+        return authService.signUp(dto);
+    }
+
+    @PostMapping("sign-in")
+    public ResponseEntity<? super SignInResponseDto> signIn(@RequestBody @Valid SignInRequestDto dto) {
+        return authService.signIn(dto);
     }
 }

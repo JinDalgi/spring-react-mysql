@@ -1,9 +1,12 @@
 package com.my.boardback.service.implement;
 
+import com.my.boardback.dto.request.auth.SignInRequestDto;
 import com.my.boardback.dto.request.auth.SignUpRequestDto;
 import com.my.boardback.dto.response.ResponseDto;
+import com.my.boardback.dto.response.auth.SignInResponseDto;
 import com.my.boardback.dto.response.auth.SignUpResponseDto;
 import com.my.boardback.entity.UserEntity;
+import com.my.boardback.provider.JwtProvider;
 import com.my.boardback.repository.UserRepository;
 import com.my.boardback.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final JwtProvider jwtProvider;
 
     @Override
     public ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto dto) {
@@ -51,5 +55,33 @@ public class AuthServiceImpl implements AuthService {
         }
 
         return SignUpResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
+
+        String token = null;
+
+        try {
+
+            String email = dto.getEmail();
+            UserEntity userEntity = userRepository.findByEmail(email);
+
+            if (userEntity == null) return SignInResponseDto.signInFailed();
+
+            String password = dto.getPassword();
+            String encodedPassword = userEntity.getPassword();
+            boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+
+            if (!isMatched) return SignInResponseDto.signInFailed();
+
+            token = jwtProvider.create(email);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return SignInResponseDto.success(token);
     }
 }
