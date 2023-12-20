@@ -3,7 +3,7 @@ enum ResponseCode {
     SUCCESS = "SU",
 
     // HTTP Status 400
-    VALIDATION_FAILED = "vf",
+    VALIDATION_FAILED = "VF",
     DUPLICATE_EMAIL = "DE",
     DUPLICATE_NICKNAME = "DN",
     DUPLICATE_TEL_NUMBER = "DT",

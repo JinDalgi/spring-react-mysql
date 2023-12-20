@@ -11,7 +11,6 @@ import com.my.boardback.repository.UserRepository;
 import com.my.boardback.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +19,8 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final JwtProvider jwtProvider;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto dto) {
