@@ -44,6 +44,10 @@ export default function Authentication() {
 
         // function: sign in response 처리 함수 //
         const signInResponse = (responseBody: SignInResponseDto | ResponseDto | null) => {
+            try{
+
+            console.log(responseBody);
+
             if (!responseBody) {
                 alert('네트워크 이상');
                 return;
@@ -59,7 +63,10 @@ export default function Authentication() {
             const expires = new Date(now + expirationTime * 1000);
 
             setCookie('accessToken', token, {expires, path: MAIN_PATH()});
-            navigator(MAIN_PATH());
+                navigator(MAIN_PATH());
+            } catch (err) {
+                console.error(err);
+                } 
         }
 
 
@@ -81,7 +88,7 @@ export default function Authentication() {
         const onSignInButtonClickHandler = () => {
             const requestBody: SignInRequestDto = {email, password};
             console.log(requestBody);
-            signInRequest(requestBody).then(signInResponse);
+            signInRequest(requestBody).then((res) => signInResponse(res));
         }
 
         // event handler: 회원가입 링크 클릭 이벤트 처리 //
@@ -104,14 +111,14 @@ export default function Authentication() {
         // event handler: 패스워드 Input KeyDown 이벤트 처리 //
         const onPasswordKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
             if (event.key !== 'Enter') return;
-            if (!passwordRef.current) return;
-            passwordRef.current?.focus();
+            onSignInButtonClickHandler();
         }
 
         // event handler: 이메일 Input KeyDown 이벤트 처리 //
         const onEmailKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
             if (event.key !== 'Enter') return;
-            onSignInButtonClickHandler();
+            if (!passwordRef.current) return;
+            passwordRef.current?.focus();
         }
 
         // render: sign in card 컴포넌트 랜더링 //
