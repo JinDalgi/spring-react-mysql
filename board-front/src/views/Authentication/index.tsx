@@ -392,12 +392,6 @@ export default function Authentication() {
                                 <InputBox ref={passwordCheckRef} label='비밀번호 확인*' type={passwordCheckType} placeholder='비밀번호를 다시 입력해주세요.' value={passwordCheck} onChange={onPasswordCheckChangeHandler} error={isPasswordCheckError} message={passwordCheckErrorMessage} icon={passwordCheckButtonIcon} onButtonClick={onPasswordCheckButtonClickHandler} onKeyDown={onPasswordCheckKeyDownHandler} />
                             </>
                         )}
-                    </div>
-                    <div className='auth-card-bottom'>
-                        {page === 1 && (
-                            <div className='black-large-full-button' onClick={onNextButtonClickHandler}>{'다음 단계'}</div>
-
-                        )}
                         {page === 2 && (
                             <>
                                 <InputBox ref={nicknameRef} label={'닉네임*'} type={'text'} placeholder={'닉네임을 입력해주세요.'} value={nickname} onChange={onNicknameChangeHandler} error={isNicknameError} message={nicknameErrorMessage}  onKeyDown={onNicknameKeyDownHandler} />
@@ -405,6 +399,11 @@ export default function Authentication() {
                                 <InputBox ref={addresseRef} label={'주소*'} type={'text'} placeholder={'우편번호 찾기.'} value={address} onChange={onAddressChangeHandler} error={isAddressError} message={addressErrorMessage} icon='expand-right-light-icon' onButtonClick={onAddressButtonClickHandler} onKeyDown={onAddressKeyDownHandler} />
                                 <InputBox ref={addresseDetailRef} label={'상세 주소*'} type={'text'} placeholder={'상세 주소를 입력해주세요.'} value={addressDetail} onChange={onAddressDetailChangeHandler} error={false} onKeyDown={onAddressDetailKeyDownHandler} />
                             </>
+                        )}
+                    </div>
+                    <div className='auth-card-bottom'>
+                        {page === 1 && (
+                            <div className='black-large-full-button' onClick={onNextButtonClickHandler}>{'다음 단계'}</div>
                         )}
                         {page === 2 && (
                             <>
