@@ -29,12 +29,14 @@ export default function Authentication() {
         const emailRef = useRef<HTMLInputElement | null>(null);
         // state: 패스워드 요소 참조 상태 //
         const passwordRef = useRef<HTMLInputElement | null>(null);
+
         // state: 이메일 상태 //
         const [email, setEmail] = useState<string>('');
         // state: 패스워드 상태 //
         const [password, setPassword] = useState<string>('');
         // state: 패스워드 타입 상태 //
         const [passwordType, setPasswordType] = useState<'text' | 'password'>('password');
+
         // state: 패스워드 버튼 아이콘 상태 //
         const [passwordButtonIcon, setPasswordButtonIcon] = useState<'eye-light-off-icon' | 'eye-light-on-icon'>('eye-light-off-icon');
         // state: 에러 상태 //
@@ -158,13 +160,20 @@ export default function Authentication() {
     // component: sign up card 컴포넌트 //
     const SignUpCard = () => {
 
-        // state: 이메일 요소 참조 상태 //
+        // state: Email 요소 참조 상태 //
         const emailRef = useRef<HTMLInputElement | null>(null);
         // state: Password 요소 참조 상태 //
         const passwordRef = useRef<HTMLInputElement | null>(null);
         // state: PasswordCheck 요소 참조 상태 //
         const passwordCheckRef = useRef<HTMLInputElement | null>(null);
-
+        // state: 닉네임 요소 참조 상태 //
+        const nicknameRef = useRef<HTMLInputElement | null>(null);
+        // state: 전화번호 요소 참조 상태 //
+        const telNumberRef = useRef<HTMLInputElement | null>(null);
+        // state: 주소 요소 참조 상태 //
+        const addresseRef = useRef<HTMLInputElement | null>(null);
+        // state: 상세 주소 요소 참조 상태 //
+        const addresseDetailRef = useRef<HTMLInputElement | null>(null);
 
         // state: 페이지 번호 상태 //
         const [page, setPage] = useState<1 | 2>(1);
@@ -174,6 +183,14 @@ export default function Authentication() {
         const [password, setPassword] = useState<string>('');
         // state: Password Check 상태 //
         const [passwordCheck, setPasswordCheck] = useState<string>('');
+        // state: 닉네임 상태 //
+        const [nickname, setNickname] = useState<string>('');
+        // state: 전화번호 상태 //
+        const [telNumber, setTelNumber] = useState<string>('');
+        // state: 주소 상태 //
+        const [address, setAddress] = useState<string>('');
+        // state: 상세 주소 상태 //
+        const [addressDetail, setAddressDetail] = useState<string>('');
 
         // state: Password 타입 상태 //
         const [passwordType, setPasswordType] = useState<'text' | 'password'>('password');
@@ -186,6 +203,12 @@ export default function Authentication() {
         const [isPasswordError, setPasswordError] = useState<boolean>(false);
         // state: PasswordCheck 에러 상태 //
         const [isPasswordCheckError, setPasswordCheckError] = useState<boolean>(false);
+        // state: 닉네임 에러 메세지 상태 //
+        const [isNicknameError, setNicknameError] = useState<boolean>(false);
+        // state: 전화번호 에러 메세지 상태 //
+        const [isTelNumberError, setTelNumberError] = useState<boolean>(false);
+        // state: 주소 에러 메세지 상태 //
+        const [isAddressError, setAddressError] = useState<boolean>(false);
 
         // state: Email 에러 메세지 상태 //
         const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
@@ -193,6 +216,13 @@ export default function Authentication() {
         const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>('');
         // state: Password Check 에러 메세지 상태 //
         const [passwordCheckErrorMessage, setPasswordCheckErrorMessage] = useState<string>('');
+        // state: 닉네임 에러 메세지 상태 //
+        const [nicknameErrorMessage, setNicknameErrorMessage] = useState<string>('');
+        // state: 전화번호 에러 메세지 상태 //
+        const [telNumberErrorMessage, setTelNumberErrorMessage] = useState<string>('');
+        // state: 주소 에러 메세지 상태 //
+        const [addressErrorMessage, setAddressErrorMessage] = useState<string>('');
+
 
         // state: Password 버튼 아이콘 상태 //
         const [passwordButtonIcon, setPasswordButtonIcon] = useState<'eye-light-off-icon' | 'eye-light-on-icon'>('eye-light-off-icon');
@@ -205,18 +235,37 @@ export default function Authentication() {
             const {value} = event.target;
             setEmail(value);
         }
-
         // event handler: Password 변경 이벤트 처리 //
         const onPasswordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
             const {value} = event.target;
             setPassword(value);
         }
-
         // event handler: Password Check 변경 이벤트 처리 //
         const onPasswordCheckChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
             const {value} = event.target;
             setPasswordCheck(value);
         }
+        // event handler: 닉네임 변경 이벤트 처리 //
+        const onNicknameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+            const {value} = event.target;
+            setNickname(value);
+        }
+        // event handler: 전화번호 변경 이벤트 처리 //
+        const onTelNumberChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+            const {value} = event.target;
+            setTelNumber(value);
+        }
+        // event handler: 주소 변경 이벤트 처리 //
+        const onAddressChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+            const {value} = event.target;
+            setAddress(value);
+        }
+        // event handler: 상세 주소 변경 이벤트 처리 //
+        const onAddressDetailChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+            const {value} = event.target;
+            setAddressDetail(value);
+        }
+
 
         // event handler: Password 버튼 클릭 이벤트 처리 //
         const onPasswordButtonClickHandler = () => {
@@ -240,6 +289,11 @@ export default function Authentication() {
                 setPasswordCheckButtonIcon('eye-light-off-icon');
                 setPasswordCheckType('password');
             }
+        }
+
+        // event handler: 주소 버튼 클릭 이벤트 처리 //
+        const onAddressButtonClickHandler = () => {
+
         }
 
         // event handler: 다음으로 버튼 클릭 이벤트 처리 //
@@ -268,6 +322,17 @@ export default function Authentication() {
             setPage(2);
         }
 
+        // event handler: 회원가입 버튼 클릭 이벤트 처리 //
+        const onSignUpButtonClickHandler = () => {
+
+        }
+
+        // event handler: 로그인 링크 클릭 이벤트 처리 //
+        const onSignInLinkClickHandler = () => {
+            setView('sign-in');
+        }
+
+
         // event handler: Email 키 다운 이벤트 처리 //
         const onEmailKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
             if (event.key !== 'Enter') return;
@@ -288,6 +353,28 @@ export default function Authentication() {
             onNextButtonClickHandler();
         }
 
+        // event handler: 닉네임 키 다운 이벤트 처리 //
+        const onNicknameKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+            if (event.key !== 'Enter') return;
+        }
+
+        // event handler: 전화번호 키 다운 이벤트 처리 //
+        const onTelNumberKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+            if (event.key !== 'Enter') return;
+        }
+
+        // event handler: 주소 키 다운 이벤트 처리 //
+        const onAddressKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+            if (event.key !== 'Enter') return;
+        }
+
+        // event handler: 상세 주소 키 다운 이벤트 처리 //
+        const onAddressDetailKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+            if (event.key !== 'Enter') return;
+        }
+
+
+
 
         // render: sign up card 컴포넌트 랜더링 //
         return(
@@ -298,14 +385,41 @@ export default function Authentication() {
                             <div className='auth-card-title'>{'회원가입'}</div>
                             <div className='auth-card-page'>{`${page}/2`}</div>
                         </div>
-                        <InputBox ref={emailRef} label='이메일 주소*' type='text' placeholder='이메일을 입력해주세요.' value={email} onChange={onEmailChangeHandler} error={isEmailError} message={emailErrorMessage} onKeyDown={onEmailKeyDownHandler} />
-                        <InputBox ref={passwordRef} label='비밀번호*' type={passwordType} placeholder='비밀번호를 입력해주세요.' value={password} onChange={onPasswordChangeHandler} error={isPasswordError} message={passwordErrorMessage} icon={passwordButtonIcon} onButtonClick={onPasswordButtonClickHandler} onKeyDown={onPasswordKeyDownHandler} />
-                        <InputBox ref={passwordCheckRef} label='비밀번호 확인*' type={passwordCheckType} placeholder='비밀번호를 다시 입력해주세요.' value={passwordCheck} onChange={onPasswordCheckChangeHandler} error={isPasswordCheckError} message={passwordCheckErrorMessage} icon={passwordCheckButtonIcon} onButtonClick={onPasswordCheckButtonClickHandler} onKeyDown={onPasswordCheckKeyDownHandler} />
+                        {page === 1 && (
+                            <>
+                                <InputBox ref={emailRef} label='이메일 주소*' type='text' placeholder='이메일을 입력해주세요.' value={email} onChange={onEmailChangeHandler} error={isEmailError} message={emailErrorMessage} onKeyDown={onEmailKeyDownHandler} />
+                                <InputBox ref={passwordRef} label='비밀번호*' type={passwordType} placeholder='비밀번호를 입력해주세요.' value={password} onChange={onPasswordChangeHandler} error={isPasswordError} message={passwordErrorMessage} icon={passwordButtonIcon} onButtonClick={onPasswordButtonClickHandler} onKeyDown={onPasswordKeyDownHandler} />
+                                <InputBox ref={passwordCheckRef} label='비밀번호 확인*' type={passwordCheckType} placeholder='비밀번호를 다시 입력해주세요.' value={passwordCheck} onChange={onPasswordCheckChangeHandler} error={isPasswordCheckError} message={passwordCheckErrorMessage} icon={passwordCheckButtonIcon} onButtonClick={onPasswordCheckButtonClickHandler} onKeyDown={onPasswordCheckKeyDownHandler} />
+                            </>
+                        )}
                     </div>
                     <div className='auth-card-bottom'>
-                        <div className='black-large-full-button' onClick={onNextButtonClickHandler}>{'다음 단계'}</div>
+                        {page === 1 && (
+                            <div className='black-large-full-button' onClick={onNextButtonClickHandler}>{'다음 단계'}</div>
+
+                        )}
+                        {page === 2 && (
+                            <>
+                                <InputBox ref={nicknameRef} label={'닉네임*'} type={'text'} placeholder={'닉네임을 입력해주세요.'} value={nickname} onChange={onNicknameChangeHandler} error={isNicknameError} message={nicknameErrorMessage}  onKeyDown={onNicknameKeyDownHandler} />
+                                <InputBox ref={telNumberRef} label={'전화번호*'} type={'text'} placeholder={'전화번호를 입력해주세요.'} value={telNumber} onChange={onTelNumberChangeHandler} error={isTelNumberError} message={telNumberErrorMessage} onKeyDown={onTelNumberKeyDownHandler} />
+                                <InputBox ref={addresseRef} label={'주소*'} type={'text'} placeholder={'우편번호 찾기.'} value={address} onChange={onAddressChangeHandler} error={isAddressError} message={addressErrorMessage} icon='expand-right-light-icon' onButtonClick={onAddressButtonClickHandler} onKeyDown={onAddressKeyDownHandler} />
+                                <InputBox ref={addresseDetailRef} label={'상세 주소*'} type={'text'} placeholder={'상세 주소를 입력해주세요.'} value={addressDetail} onChange={onAddressDetailChangeHandler} error={false} onKeyDown={onAddressDetailKeyDownHandler} />
+                            </>
+                        )}
+                        {page === 2 && (
+                            <>
+                                <div className='auth-consent-box'>
+                                    <div className='auth-check-box'>
+                                        <div className='check-ring-light-icon'></div>
+                                    </div>
+                                    <div className='auth-consent-title'>{'개인정보동의'}</div>
+                                    <div className='auth-consent-link'>{'더보기 >'}</div>
+                                </div>
+                                <div className='black-large-full-button' onClick={onSignUpButtonClickHandler}>{'회원가입'}</div>
+                            </>
+                        )}
                         <div className='auth-description-box'>
-                            <div className='auth-description'>{'이미 계정이 있으신가요? '}<span className='auth-description-link'>{'로그인'}</span></div>
+                            <div className='auth-description'>{'이미 계정이 있으신가요? '}<span className='auth-description-link' onClick={onSignInLinkClickHandler}>{'로그인'}</span></div>
                         </div>
                     </div>
                 </div>
