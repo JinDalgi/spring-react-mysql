@@ -183,3 +183,11 @@
     font-weight: 400;
     line-height: 140%;
 }
+
+.check-round-fill-icon {
+    background-image: url(assets/images/check-round-fill.png);
+}
+
+.check-ring-light-icon {
+    background-image: url(assets/images/check-ring-light.png);
+}

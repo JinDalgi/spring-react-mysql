@@ -55,7 +55,7 @@ const InputBox = forwardRef<HTMLInputElement, Props>(
                 )}
             </div>
             {message !== undefined &&
-                <div className='inputbox-message'>{'비밀번호는 8자 이상 입력해주세요.'}</div>
+                <div className='inputbox-message'>{message}</div>
             }
         </div>
     )
