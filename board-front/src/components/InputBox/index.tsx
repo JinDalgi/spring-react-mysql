@@ -1,62 +1,51 @@
 import './style.css';
-import {ChangeEvent, forwardRef, KeyboardEvent} from "react";
+import {ChangeEvent, Dispatch, forwardRef, KeyboardEvent, SetStateAction} from "react";
 
-// interface: Input Box 컴포넌트 Propperties //
+//          interface: Input 상자 컴포넌트 Props          //
 interface Props {
     label: string;
     type: 'text' | 'password';
+    error: boolean;
     placeholder: string;
     value: string;
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    error: boolean;
-
-    icon?: 'eye-light-off-icon' | 'eye-light-on-icon' | 'expand-right-light-icon';
+    setValue: Dispatch<SetStateAction<string>>
+    icon?: string;
+    errorMessage?: string;
+    onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
     onButtonClick?: () => void;
-
-    message?: string;
-
-    onKeyDown?:  (event: KeyboardEvent<HTMLInputElement>) => void;
 }
 
-// component: Input Box 컴포넌트 //
-const InputBox = forwardRef<HTMLInputElement, Props>(
-    (props: Props, ref) => {
+//          component: Input 상자 컴포넌트          //
+const InputBox = forwardRef<HTMLInputElement, Props>((props: Props, ref) => {
 
-    // state: properties //
-    const { label, type,
-            placeholder, value,
-            error, icon, message} = props;
+    //          state: Properties          //
+    const { label, type, error, placeholder, value, icon, errorMessage } = props;
+    const { setValue, onKeyDown, onButtonClick } = props;
 
-    const { onChange,
-            onButtonClick,
-            onKeyDown} = props;
-
-
-    //  event handler: input 키 이벤트 처리 함수 //
-    const onKeyDownHandler  = (event: KeyboardEvent<HTMLInputElement>) => {
+    //          event handler: input 값 변경 이벤트 처리          //
+    const onInputValueChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setValue(value);
+    }
+    //          event handler: input 값 변경 이벤트 처리          //
+    const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (!onKeyDown) return;
         onKeyDown(event);
     }
 
-    // render: Input Box 컴포넌트 //
+    //          render: Input 상자 렌더링         //
     return (
         <div className='inputbox'>
             <div className='inputbox-label'>{label}</div>
-            <div className={ error ? 'inputbox-container-error' : 'inputbox-container'}>
-                <input ref={ref} type={type} className='input' placeholder={placeholder} value={value}
-                       onChange={onChange} onKeyDown={onKeyDownHandler} />
-
+            <div className={error ? 'inputbox-container-error' : 'inputbox-container'}>
+                <input ref={ref} className='input' type={type} placeholder={placeholder} value={value} onChange={onInputValueChangeHandler} onKeyDown={onKeyDownHandler} />
                 {onButtonClick !== undefined && (
-                <div className='icon-button' onClick={onButtonClick}>
-                    {icon !== undefined && (
-                        <div className={`icon ${icon}`}></div>
-                    )}
-                </div>
+                    <div className='icon-button' onClick={onButtonClick}>
+                        {icon !== undefined && <div className={icon}></div>}
+                    </div>
                 )}
             </div>
-            {message !== undefined &&
-                <div className='inputbox-message'>{message}</div>
-            }
+            <div className='inputbox-message'>{errorMessage}</div>
         </div>
     )
 });

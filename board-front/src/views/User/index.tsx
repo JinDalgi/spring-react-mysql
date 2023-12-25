@@ -1,4 +1,19 @@
 import './style.css'
+import {useNavigate, useParams} from "react-router-dom";
+import useUserStore from "../../stores/user.store";
+import {ChangeEvent, useEffect, useRef, useState} from "react";
+import {useCookies} from "react-cookie";
+import {GetSignInUserResponseDto, GetUserResponseDto} from "../../apis/response/user";
+import {ResponseDto} from "../../apis/response";
+import {AUTH_PATH, MAIN_PATH} from "../../constant";
+import {
+    fileUploadRequest,
+    getSignInUserRequest,
+    getUserRequest,
+    patchNicknameRequest,
+    patchProfileImageRequest
+} from "../../apis";
+import {PatchNicknameRequestDto, PatchProfileImageRequestDto} from "../../apis/request/user";
 
 
 //          component: 유저 페이지          //
@@ -38,7 +53,7 @@ export default function User() {
             if (code === 'NU') alert('존재하지 않는 유저입니다.');
             if (code === 'DBE') alert('데이터베이스 오류입니다.');
             if (code !== 'SU') {
-                navigator(MAIN_PATH);
+                navigator(MAIN_PATH());
                 return;
             }
 
@@ -52,7 +67,7 @@ export default function User() {
         const patchNicknameResponse = (code: string) => {
             if (code === 'AF' || code === 'NU') {
                 alert('로그인이 필요합니다.');
-                navigator(AUTH_PATH);
+                navigator(AUTH_PATH());
                 return;
             }
             if (code === 'VF') alert('빈 값일 수 없습니다.');
@@ -85,7 +100,7 @@ export default function User() {
         //          function: patch profile image response 처리 함수          //
         const patchProfileImageResponse = (code: string) => {
             if (code === 'NU' || code === 'AF') {
-                navigator(AUTH_PATH);
+                navigator(AUTH_PATH());
                 return;
             }
             if (code === 'DBE') alert('데이터베이스 오류입니다.');
@@ -102,7 +117,7 @@ export default function User() {
         const getSignInUserResponse = (responseBody: GetSignInUserResponseDto | ResponseDto) => {
             const { code } = responseBody;
             if (code !== 'SU') {
-                setCookie('accessToken', '', { expires: new Date(), path: MAIN_PATH });
+                setCookie('accessToken', '', { expires: new Date(), path: MAIN_PATH() });
                 setUser(null);
                 return;
             }
@@ -155,7 +170,7 @@ export default function User() {
         //          effect: 조회하는 유저의 이메일이 변경될 때 마다 실행할 함수          //
         useEffect(() => {
             if (!searchEmail) {
-                navigator(MAIN_PATH);
+                navigator(MAIN_PATH());
                 return;
             }
             getUserRequest(searchEmail).then(getUserResponse);
@@ -198,114 +213,10 @@ export default function User() {
 
     };
 
-    //          component: 유저 게시물 컴포넌트          //
-    const UserBoardList = () => {
-
-        //          state: 페이지네이션 관련 상태          //
-        const { currentPageNumber, setCurrentPageNumber, currentSectionNumber, setCurrentSectionNumber,
-            viewBoardList, viewPageNumberList, totalSection, setBoardList } = usePagination<BoardListItem>(5);
-        //          state: 게시물 개수 상태          //
-        const [count, setCount] = useState<number>(0);
-
-        //          function: get user board list response 처리 함수          //
-        const getUserBoardListResponse = (responseBody: GetUserBoardListResponseDto | ResponseDto) => {
-            const { code } = responseBody;
-            if (code === 'NU') alert('존재하지 않는 유저입니다.');
-            if (code === 'DBE') alert('데이터베이스 오류입니다.');
-            if (code !== 'SU') {
-                navigator(MAIN_PATH);
-                return;
-            }
-
-            const { userBoardList } = responseBody as GetUserBoardListResponseDto;
-            setBoardList(userBoardList);
-            setCount(userBoardList.length);
-        }
-
-        //          event handler: 버튼 클릭 이벤트 처리          //
-        const onButtonClickHandler = () => {
-            if (!user) {
-                alert('로그인이 필요합니다.');
-                navigator(AUTH_PATH);
-                return;
-            }
-
-            if (isMyPage) navigator(BOARD_WRITE_PATH);
-            else navigator(USER_PATH(user.email));
-        }
-
-        //          effect: 조회하는 유저의 이메일이 변경될 때 마다 실행할 함수 //
-        useEffect(() => {
-            if (!searchEmail) {
-                navigator(MAIN_PATH);
-                return;
-            }
-            getUserBoardListRequest(searchEmail).then(getUserBoardListResponse);
-        }, [searchEmail]);
-
-        //          render: 유저 게시물 컴포넌트 렌더링          //
-        return (
-            <div id='user-board-wrapper'>
-                <div className='user-board-container'>
-                    <div className='user-board-title-box'>
-                        <div className='user-board-title'>{'내 개시물 '}<span className='emphasis'>{count}</span></div>
-                    </div>
-                    <div className='user-board-contents-box'>
-                        {count === 0 ? (
-                            <div className='user-board-contents-nothing'>{'게시물이 없습니다.'}</div>
-                        ) : (
-                            <div className='user-board-contents-result-box'>
-                                {viewBoardList.map(boardItem => <BoardItem boardItem={boardItem} />)}
-                            </div>
-                        )}
-                        <div className='user-board-button-box' onClick={onButtonClickHandler}>
-                            <div className='user-board-button-contents'>
-                                {isMyPage ? (
-                                    <>
-                                        <div className='icon-box'>
-                                            <div className='edit-light-icon'></div>
-                                        </div>
-                                        <div className='user-board-button-text'>{'글쓰기'}</div>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div className='user-board-button-text'>{'내 게시물로 가기'}</div>
-                                        <div className='icon-box'>
-                                            <div className='arrow-right-icon'></div>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div className='user-board-pagination-box'>
-                        {count !== 0 && (
-                            <Pagination
-                                currentPageNumber={currentPageNumber}
-                                currentSectionNumber={currentSectionNumber}
-                                setCurrentPageNumber={setCurrentPageNumber}
-                                setCurrentSectionNumber={setCurrentSectionNumber}
-                                viewPageNumberList={viewPageNumberList}
-                                totalSection={totalSection}
-                            />
-                        )}
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
-    //          effect: 조회하는 유저의 이메일이 변경될 때 마다 실행할 함수 //
-    useEffect(() => {
-        const isMyPage = searchEmail === user?.email;
-        setMyPage(isMyPage);
-    } , [searchEmail, user]);
-
     //          render: 유저 페이지 렌더링          //
     return (
         <>
             <UserInfo />
-            <UserBoardList />
         </>
     )
 }
