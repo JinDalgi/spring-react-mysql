@@ -1,7 +1,7 @@
 import {SignInRequestDto, SignUpRequestDto} from "./request/auth";
 import axios from "axios";
-import {SignInResponseDto, SignUpResponseDto} from "./response/auth";
 import {ResponseDto} from "./response";
+import {SignInResponseDto, SignUpResponseDto} from "./response/auth";
 
 
 const API_DOMAIN = `/api/v1/`;
@@ -9,33 +9,31 @@ const API_DOMAIN = `/api/v1/`;
 const SIGN_IN_URL = () => `${API_DOMAIN}/auth/sign-in`;
 const SIGN_UP_URL = () => `${API_DOMAIN}/auth/sign-up`;
 
+export const signUpRequest  = async (requestBody: SignUpRequestDto) => {
+    const result = await axios.post(SIGN_UP_URL(), requestBody)
+        .then(response => {
+            const responseBody: SignUpResponseDto = response.data;
+            const { code } = responseBody;
+            return code;
+        })
+        .catch(error => {
+            const responseBody: ResponseDto = error.response.data;
+            const { code } = responseBody;
+            return code;
+        });
+    return result;
+};
+
+
 export const signInRequest = async (requestBody: SignInRequestDto) => {
-
-// /api/v1/auth/sign-in
-
-  try {
-    const response = await axios.post(SIGN_IN_URL(), requestBody)
-    const responseBody = response.data
-    return responseBody
-  } catch (err: any) {
-    console.error(err);
-    if (!err.response.data) return null;
-    const responseBody: ResponseDto = err.response.data;
-    return responseBody;
-      
-  }
-
-}
-
-export const signUpRequest = async (requestBody: SignUpRequestDto) => {
-
-    try {
-        const response = await axios.post(SIGN_UP_URL(), requestBody)
-        const responseBody = response.data;
-        return responseBody;
-        } catch(error: any) {
-        if (!error.response.data) return null;
-        const responseBody: ResponseDto = error.response.data;
-        return responseBody;
-    }
-}
+    const result = await axios.post(SIGN_IN_URL(), requestBody)
+        .then(response => {
+            const responseBody: SignInResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+    return result;
+};
